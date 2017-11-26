@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
-
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
@@ -15,6 +15,7 @@ import LotusStatusBar from '../components/LotusStatusBar'
 import SvgUri from 'react-native-svg-uri'
 var DismissKeyboard = require('dismissKeyboard');
 import LinearGradientButton from '../components/LinearGradientButton'
+import { scaleSize, setSpText , getTrueSize} from '../libs/screenUtils'
 
 class Login extends Component {
   constructor (props) {
@@ -40,11 +41,11 @@ class Login extends Component {
           <LotusStatusBar />
           <View style={styles.container}>
             <View style={styles.logo}>
-              <SvgUri width="150" height="150" fill="white" source={require('../statics/images/logo.svg')}/>
+              <SvgUri width={scaleSize(250)} height={scaleSize(250)} fill="white" source={require('../statics/images/logo.svg')}/>
             </View>
             <View style={styles.username}>
               <TextInput
-                 style={{height: 48, backgroundColor: 'white', borderRadius: 25, paddingLeft: 20, paddingTop: 5, paddingBottom: 5}}
+                 style={styles.textInput}
                  onChangeText={(text) => this.setState({username: text})}
                  value={this.state.username}
                  underlineColorAndroid="transparent"
@@ -55,7 +56,7 @@ class Login extends Component {
             </View>
             <View style={styles.password}>
               <TextInput
-                style={{height: 48, backgroundColor: 'white', borderRadius: 25, paddingLeft: 20, paddingTop: 5, paddingBottom: 5}}
+                style={styles.textInput}
                 secureTextEntry={true}
                 onChangeText={(text) => this.setState({password: text})}
                 value={this.state.password}
@@ -67,16 +68,16 @@ class Login extends Component {
             <View style={styles.loginButton}>
               <LinearGradientButton text="登录"
                               opacity={0.75}
-                              style={{height: 48, borderRadius: 48}}
+                              style={{height: scaleSize(90), width: '100%'}}
                               gradientColor={['#3023AE', '#C86DD7']}
                               onPress={() => {}}/>
             </View>
             <View style={styles.someText}>
-              <View style={{width: 50, borderTopColor: '#c9b8ef', borderTopWidth: 1, marginTop: 6}}></View>
+              <View style={styles.line}></View>
               <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{backgroundColor: 'transparent', color: '#c9b8ef'}}>其他账号</Text>
               </View>
-              <View style={{width: 50, borderTopColor: '#c9b8ef', borderTopWidth: 1, marginTop: 6 }}></View>
+              <View style={styles.line}></View>
             </View>
             <View style={styles.thirdSigninBox}>
               <View style={styles.icon}></View>
@@ -96,34 +97,77 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   container: {
-    marginTop: 20,
+    ...Platform.select({
+      ios: {
+        marginTop: scaleSize(40 - getTrueSize(5))
+      },
+      android: {
+        marginTop: scaleSize(40 - getTrueSize(5))
+      }
+    }),
+    // marginTop: scaleSize(40 - 5),
     alignItems: "center",
     justifyContent: 'center',
-    // borderWidth: 1,
+    borderWidth: 1,
     // borderColor: 'red'
   },
   loginButton: {
-    width: "85%"
+    width: "85%",
+    height: scaleSize(100),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo: {
-    marginTop: 70
+    marginTop: scaleSize(100)
+  },
+  textInput: {
+    height: scaleSize(48 * 2 - 5),
+    backgroundColor: 'white',
+    borderRadius: scaleSize(80*2),
+    paddingLeft: scaleSize(20* 2),
+    paddingTop: scaleSize(5 * 2),
+    paddingBottom: scaleSize(5 * 2),
+    borderColor: '#D8E8F0',
+    borderWidth: 1,
+    fontSize: setSpText(36),
+    color: "#19B3FF"
   },
   username: {
     width: "85%",
-    marginTop: 60
+    marginTop: scaleSize(90)
   },
   password: {
     width: '85%',
-    marginTop: 20,
-    marginBottom: 40,
+    marginTop: scaleSize(40),
+    marginBottom: scaleSize(80),
   },
   someText: {
-    marginTop: 70,
-    width: 160,
+    marginTop: scaleSize(90),
+    width: scaleSize(300),
     flexDirection: 'row'
   },
   thirdSigninBox: {},
-  icon: {}
+  icon: {},
+  line: {
+    width: scaleSize(70),
+    borderTopColor: '#c9b8ef',
+    borderTopWidth: 1,
+    ...Platform.select({
+      ios: {
+        marginTop: scaleSize(12)
+      },
+      android: {
+        marginTop: scaleSize(21)
+      }
+    })
+  },
+  thirdSigninBox: {
+    marginTop: scaleSize(66),
+    borderWidth: 1,
+    width: "85%",
+    height: scaleSize(180)
+  }
 });
 
 export default connect(

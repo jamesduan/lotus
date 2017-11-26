@@ -15,6 +15,8 @@ import { PropTypes } from 'prop-types'
 
 import LinearGradient from 'react-native-linear-gradient'
 
+import { setSpText, scaleSize } from '../libs/screenUtils'
+
 class LinearGradientButton extends PureComponent {
 
   constructor(props) {
@@ -42,7 +44,7 @@ class LinearGradientButton extends PureComponent {
                         locations={this.state.locations}
                         style={styles.linearGradient}
                         >
-          {this.renderBtnText()}
+              {this.renderBtnText()}
         </LinearGradient>
       </TouchableOpacity>
     )
@@ -60,18 +62,21 @@ LinearGradient.propTypes = {
 const styles = StyleSheet.create({
   container: {
     width: "80%",
-    height: 46,
+    height: scaleSize(46),
     marginTop: 100,
   },
   linearGradient: {
     // flex: 1,
-    borderRadius: 48,
+    borderRadius: scaleSize(48),
+    height: scaleSize(90),
+    // borderWidth: 1,
+    justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 18,
-    fontFamily: 'Gill Sans',
+    fontSize: setSpText(30),
+    // fontFamily: 'Gill Sans',
     textAlign: 'center',
-    margin: 10,
+    // marginVertical: scaleSize(26),
     color: '#ffffff',
     backgroundColor: 'transparent',
   },

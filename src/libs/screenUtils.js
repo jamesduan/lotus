@@ -286,6 +286,13 @@ export default class ScreenUtil {
     }
 }
 
+export function getTrueSize(size) {
+  if (Platform.OS === 'ios') {
+    return size
+  } else {
+    return size - 16
+  }
+}
 //
 // // 将当前时间换成时间格式字符串
 // var timestamp3 = 1403058804;
