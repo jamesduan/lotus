@@ -16,6 +16,7 @@ import SvgUri from 'react-native-svg-uri'
 var DismissKeyboard = require('dismissKeyboard');
 import LinearGradientButton from '../components/LinearGradientButton'
 import { scaleSize, setSpText , getTrueSize} from '../libs/screenUtils'
+import LotusIcons from 'react-native-vector-icons/LotusIcons'
 
 class Login extends Component {
   constructor (props) {
@@ -41,7 +42,7 @@ class Login extends Component {
           <LotusStatusBar />
           <View style={styles.container}>
             <View style={styles.logo}>
-              <SvgUri width={scaleSize(250)} height={scaleSize(250)} fill="white" source={require('../statics/images/logo.svg')}/>
+              <LotusIcons name="logo" style={{fontSize: setSpText(130 * 2), backgroundColor: 'transparent', color: 'white'}}/>
             </View>
             <View style={styles.username}>
               <TextInput
@@ -51,7 +52,6 @@ class Login extends Component {
                  underlineColorAndroid="transparent"
                  placeholder="请输入用户名"
                  placeholderTextColor="#ACC9D3"
-
               />
             </View>
             <View style={styles.password}>
@@ -80,10 +80,18 @@ class Login extends Component {
               <View style={styles.line}></View>
             </View>
             <View style={styles.thirdSigninBox}>
-              <View style={styles.icon}></View>
-              <View style={styles.icon}></View>
-              <View style={styles.icon}></View>
-              <View style={styles.icon}></View>
+              <View style={styles.icon}>
+                <LotusIcons name="wechat-circle"  style={styles.iconText}/>
+              </View>
+              <View style={styles.icon}>
+                <LotusIcons name="qq-circle" style={styles.iconText}/>
+              </View>
+              <View style={styles.icon}>
+                <LotusIcons name="wyyyy-circle" style={styles.iconText}/>
+              </View>
+              <View style={styles.icon}>
+                <LotusIcons name="sina-circle"  style={styles.iconText}/>
+              </View>
             </View>
           </View>
       </LinearGradient>
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
     // marginTop: scaleSize(40 - 5),
     alignItems: "center",
     justifyContent: 'center',
-    borderWidth: 1,
+    // borderWidth: 1,
     // borderColor: 'red'
   },
   loginButton: {
@@ -126,10 +134,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: scaleSize(80*2),
     paddingLeft: scaleSize(20* 2),
-    paddingTop: scaleSize(5 * 2),
-    paddingBottom: scaleSize(5 * 2),
+    paddingTop: scaleSize(5 * 2 - 2),
+    paddingBottom: scaleSize(5 * 2 - 2),
     borderColor: '#D8E8F0',
-    borderWidth: 1,
+    // borderWidth: 1,
     fontSize: setSpText(36),
     color: "#19B3FF"
   },
@@ -147,8 +155,12 @@ const styles = StyleSheet.create({
     width: scaleSize(300),
     flexDirection: 'row'
   },
-  thirdSigninBox: {},
-  icon: {},
+  icon: {
+    // borderWidth: 1,
+    flex: 1,
+    // height: 50,
+    justifyContent: 'center'
+  },
   line: {
     width: scaleSize(70),
     borderTopColor: '#c9b8ef',
@@ -163,10 +175,18 @@ const styles = StyleSheet.create({
     })
   },
   thirdSigninBox: {
-    marginTop: scaleSize(66),
-    borderWidth: 1,
-    width: "85%",
-    height: scaleSize(180)
+    marginTop: scaleSize(30),
+    // borderWidth: 1,
+    width: "65%",
+    height: scaleSize(180),
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  iconText: {
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+    fontSize: setSpText(64),
+    color: "#c9b8ef"
   }
 });
 
