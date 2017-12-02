@@ -7,20 +7,28 @@ import {
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
+
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
+
 import LotusStatusBar from '../components/LotusStatusBar'
-import SvgUri from 'react-native-svg-uri'
 var DismissKeyboard = require('dismissKeyboard');
 import LinearGradientButton from '../components/LinearGradientButton'
 import { scaleSize, setSpText , getTrueSize} from '../libs/screenUtils'
 import LotusIcons from 'react-native-vector-icons/LotusIcons'
+import NetworkCheckUtil from '../libs/NetworkCheckUtil'
+import { commitNetworkStatus } from '../actions/networkCheckAction'
+import NetworkInfoBox from '../components/NetworkInfoBox'
 
 class Login extends Component {
   constructor (props) {
     super(props)
+    //register network check event
+    NetworkCheckUtil.addEventListener(NetworkCheckUtil.TAG_NETWORK_CHANGE,
+                                      this.handleNetwork)
     this.state = {
       start: {x: 0.5, y: 0.0},
       end: {x: 0.0, y: 0.75},
@@ -28,6 +36,11 @@ class Login extends Component {
       username: '',
       password: ''
     }
+  }
+
+  handleNetwork = (isConnected) => {
+    // console.log(isConnected);
+    this.props.commitNetworkStatus(isConnected)
   }
 
   render() {
@@ -41,8 +54,9 @@ class Login extends Component {
                       >
           <LotusStatusBar />
           <View style={styles.container}>
+            <NetworkInfoBox />
             <View style={styles.logo}>
-              <LotusIcons name="logo" style={{fontSize: setSpText(130 * 2), backgroundColor: 'transparent', color: 'white'}}/>
+              <LotusIcons name="logo" style={styles.logoIcon}/>
             </View>
             <View style={styles.username}>
               <TextInput
@@ -80,18 +94,31 @@ class Login extends Component {
               <View style={styles.line}></View>
             </View>
             <View style={styles.thirdSigninBox}>
+
               <View style={styles.icon}>
-                <LotusIcons name="wechat-circle"  style={styles.iconText}/>
+                <TouchableOpacity activeOpacity={0.75}>
+                  <LotusIcons name="wechat-circle"  style={styles.iconText}/>
+                </TouchableOpacity>
               </View>
+
               <View style={styles.icon}>
-                <LotusIcons name="qq-circle" style={styles.iconText}/>
+                <TouchableOpacity activeOpacity={0.75}>
+                  <LotusIcons name="qq-circle" style={styles.iconText}/>
+                </TouchableOpacity>
               </View>
+
               <View style={styles.icon}>
-                <LotusIcons name="wyyyy-circle" style={styles.iconText}/>
+                <TouchableOpacity activeOpacity={0.75}>
+                  <LotusIcons name="wyyyy-circle" style={styles.iconText}/>
+                </TouchableOpacity>
               </View>
+
               <View style={styles.icon}>
-                <LotusIcons name="sina-circle"  style={styles.iconText}/>
+                <TouchableOpacity activeOpacity={0.75}>
+                  <LotusIcons name="sina-circle"  style={styles.iconText}/>
+                </TouchableOpacity>
               </View>
+
             </View>
           </View>
       </LinearGradient>
@@ -128,6 +155,11 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: scaleSize(100)
+  },
+  logoIcon: {
+    fontSize: setSpText(130 * 2),
+    backgroundColor: 'transparent',
+    color: 'white'
   },
   textInput: {
     height: scaleSize(48 * 2 - 5),
@@ -194,5 +226,6 @@ export default connect(
    (state) => ({
    }),
    (dispatch) => ({
+     commitNetworkStatus: (status) => dispatch(commitNetworkStatus(status))
    })
 )(Login);
