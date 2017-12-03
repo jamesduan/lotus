@@ -84,7 +84,7 @@ class Login extends Component {
                               opacity={0.75}
                               style={{height: scaleSize(90), width: '100%'}}
                               gradientColor={['#3023AE', '#C86DD7']}
-                              onPress={() => {}}/>
+                              onPress={() => {this.props.navigation.navigate('home')}}/>
             </View>
             <View style={styles.someText}>
               <View style={styles.line}></View>

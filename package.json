@@ -9,7 +9,9 @@
 	"dependencies": {
 		"react": "16.0.0",
 		"react-native": "^0.50.4",
+		"react-native-animatable": "^1.2.4",
 		"react-native-linear-gradient": "^2.3.0",
+		"react-native-modal": "^4.1.1",
 		"react-native-storage": "^0.2.2",
 		"react-native-svg": "^6.0.0",
 		"react-native-svg-uri": "^1.2.3",
